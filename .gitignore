@@ -1,0 +1,13 @@
+# csv
+*.csv
+
+# zip
+*.zip
+
+# sales folder
+sales_data/
+
+*.csv
+*.zip
+
+sales-performance-analysis/
