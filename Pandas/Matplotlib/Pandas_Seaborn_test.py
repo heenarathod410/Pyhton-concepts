@@ -35,7 +35,7 @@ print(df.duplicated().sum())
 
 # Q6: unique values
 print("===== Find nunique values =====")
-print(df.nunique)
+print(df.nunique())
 
 # Q7: Find top 5 customer by sales
 top_5_customer = (
@@ -68,7 +68,8 @@ plt.show()
 top_5_states = (
     df.groupby('State')['Amount']
     .sum()
-    .sort_index(ascending=False)
+    # .sort_index(ascending=False)
+    .sort_values(ascending=False)
     .head(5)
 )
 
@@ -99,7 +100,8 @@ plt.show()
 highest_sales_by_region = (
     df.groupby('Zone')['Amount']
     .sum()
-    .sort_index(ascending=False)
+    # .sort_index(ascending=False)
+    .sort_values(ascending=False)
     .head(5)
 ) 
 
@@ -133,6 +135,15 @@ plt.show()
 # 
 # 3. highest zone which central 41600873
 
+# Business Insights
+
+# 1. Vishakha is the highest-value customer with total sales of 382,782, followed by Sudevi with sales of 287,142. These customers contribute significantly to revenue and should be targeted with loyalty and retention programs.
+
+# 2. Uttar Pradesh generated the highest sales amount of 19,374,968, indicating a strong market presence. Marketing and inventory investments in this state may yield higher returns.
+
+# 3. The Central zone recorded the highest sales of 41,600,873, making it the best-performing region. Understanding the factors driving this performance can help replicate success in other zones.
+
+
 # Sales by gender
 sales_by_gender = (df.groupby('Gender')['Amount'].sum())
 
@@ -158,7 +169,7 @@ plt.tight_layout()
 plt.show()
 
 # Sales by Age Group
-sales_by_age = (df.groupby('Age')['Amount']).sum()
+sales_by_age = (df.groupby('Age Group')['Amount']).sum()
 print(sales_by_age)
 
 sales_by_age = sales_by_age.reset_index()
@@ -167,7 +178,7 @@ plt.figure(figsize=(10,8))
 
 sns.barplot(
     data=sales_by_age,
-    x='Age',
+    x='Age Group',
     y='Amount'
 )
 
@@ -207,7 +218,10 @@ plt.show()
 # Top 5 Product Categories
 top_5_product = (df.groupby('Product_Category')['Amount']
                  .sum()
-                 .sort_index(ascending=False)
+                #  .sort_index(ascending=False)
+                # This sorts alphabetically.
+                .sort_values(ascending=False)
+                # This gives the actual top-selling categories.
                  .head(5))
 print(top_5_product)
 
@@ -231,3 +245,104 @@ plt.tight_layout()
 plt.show()
 
 # Average Order Value
+total_sales = df['Amount'].sum()
+total_orders = df['Orders'].sum() 
+
+Average_Order_Value = total_sales/total_orders
+
+print("Average Order Value:", round(Average_Order_Value, 2))
+
+
+# # Most Popular Product Category
+popular_category = (
+    df.groupby('Product_Category')['Amount']
+      .sum()
+      .idxmax()
+)
+
+print("Most Popular Category:", popular_category)
+
+# Q11: Top 10 Products
+top_10_products = (df.groupby('Product_ID')['Amount']\
+                    .sum()\
+                    .sort_values()\
+                    .head(10)
+)
+print("Top 10 products", top_10_products)
+
+top_10_products = top_10_products.reset_index()
+
+plt.figure(figsize=(10,8))
+
+sns.barplot(
+    data=top_10_products,
+    x='Product_ID',
+    y='Amount'
+)
+
+plt.title("Top 10 Products")
+plt.xlabel('Product_ID')
+plt.ylabel('Amount')
+
+plt.xticks(rotation = 45)
+
+plt.tight_layout()
+plt.show()
+
+# Q12: Sales Distribution
+plt.figure(figsize=(10,8))
+
+sns.histplot(
+    data=df,
+    x='Amount',
+    bins=20
+)
+
+plt.title("Sales Distribution")
+plt.xlabel('Amount')
+
+plt.tight_layout()
+plt.show()
+
+print(df['Amount'].describe())
+
+# Question:
+
+# Are most orders small or large?
+
+# Sales amounts are concentrated in the ₹4,000–₹12,000 range, indicating that most 
+# customer purchases are small to medium-sized. High-value orders above ₹15,000 occur 
+# less frequently but contribute significantly to overall revenue. The business may 
+# increase revenue by encouraging medium-value customers to make larger purchases through 
+# bundle offers, cross-selling, and premium product recommendations.
+
+
+# Q13: Correlation
+corr = df[['Amount','Orders']].corr()
+
+plt.figure(figsize=(10,8))
+
+sns.heatmap(
+    corr,
+    annot=True
+)
+
+plt.title("Correlation")
+
+plt.tight_layout()
+plt.show()
+
+# Question:
+
+# Do customers who place more orders generate more sales?
+
+# There is virtually no correlation (-0.013) between the number of orders and the sales 
+# amount. This suggests that customers placing more orders do not necessarily generate 
+# higher sales revenue. Some customers may place many small orders, while others may 
+# generate high revenue through a few large purchases.
+
+# The correlation between Orders and Amount is -0.013, indicating almost no 
+# relationship between order count and sales value. Revenue growth may depend more on 
+# increasing the value of individual transactions rather than simply increasing the 
+# number of orders.
+
