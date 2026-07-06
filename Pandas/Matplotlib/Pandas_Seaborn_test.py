@@ -132,3 +132,102 @@ plt.show()
 # 2. The highest ordered done from state is utterpradesh which 19374968.
 # 
 # 3. highest zone which central 41600873
+
+# Sales by gender
+sales_by_gender = (df.groupby('Gender')['Amount'].sum())
+
+print(sales_by_gender)
+
+sales_by_gender = sales_by_gender.reset_index()
+
+plt.figure(figsize=(10,8))
+
+sns.barplot(
+    data=sales_by_gender,
+    x='Gender',
+    y='Amount'
+)
+
+plt.title("Sales by gender")
+plt.xlabel('Gender')
+plt.ylabel('Amount')
+
+plt.xticks(rotation = 45)
+
+plt.tight_layout()
+plt.show()
+
+# Sales by Age Group
+sales_by_age = (df.groupby('Age')['Amount']).sum()
+print(sales_by_age)
+
+sales_by_age = sales_by_age.reset_index()
+
+plt.figure(figsize=(10,8))
+
+sns.barplot(
+    data=sales_by_age,
+    x='Age',
+    y='Amount'
+)
+
+plt.title("Sales by age")
+plt.xlabel('Age')
+plt.ylabel('Amount')
+
+plt.xticks(rotation = 45)
+
+plt.tight_layout()
+plt.show()
+
+# # Sales by Occupation
+
+sales_by_occupation = df.groupby('Occupation')['Amount'].sum()
+print(sales_by_occupation)
+
+sales_by_occupation = sales_by_occupation.reset_index()
+
+plt.figure(figsize=(10,8))
+
+sns.barplot(
+    data=sales_by_occupation,
+    x='Occupation',
+    y='Amount'
+)
+
+plt.title("Sales by occupation")
+plt.xlabel('Occupation')
+plt.ylabel('Amount')
+
+plt.xticks(rotation = 45)
+
+plt.tight_layout()
+plt.show()
+
+# Top 5 Product Categories
+top_5_product = (df.groupby('Product_Category')['Amount']
+                 .sum()
+                 .sort_index(ascending=False)
+                 .head(5))
+print(top_5_product)
+
+top_5_product = top_5_product.reset_index()
+
+plt.figure(figsize=(10,8))
+
+sns.barplot(
+    data=top_5_product,
+    x='Product_Category',
+    y='Amount'
+)
+
+plt.title("Top 5 Product category")
+plt.xlabel('Product_Category')
+plt.ylabel('Amount')
+
+plt.xticks(rotation = 45)
+
+plt.tight_layout()
+plt.show()
+
+# Average Order Value
