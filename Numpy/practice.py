@@ -63,3 +63,20 @@ print(arr)
 
 print("\nRavel Array:")
 print(ravel_arr)
+
+# Q-6: Create a 4 × 2 array and transpose it.
+arr_4x2 = np.arange(1, 9).reshape(4, 2)
+print("Original 4x2 Array:")
+print(arr_4x2)
+print("Dimensions:")
+print(arr_4x2.ndim)
+print("Size:")
+print(arr_4x2.size)
+
+transposed_arr = arr_4x2.T
+print("Transposed Array:")
+print(transposed_arr)
+print("Dimensions:")
+print(transposed_arr.ndim)
+print("Size:")
+print(transposed_arr.size)
